@@ -1,0 +1,9 @@
+[user]
+	name = Marc Lehmann
+	email = marc.lehmann@gmx.de
+[push]
+	default = simple
+[core]
+	editor = vim
+[color]
+	ui = auto
