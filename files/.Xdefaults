@@ -9,6 +9,11 @@ URxvt.boldItalicFont: xft:Source Code Pro Black:style=Black Italic:antialias=tru
 
 URxvt.scrollBar: False
 
+URxvt.perl-ext-common: default,selection-to-clipboard,pasta,matcher,keyboard-select,font-size
+URxvt.keysym.C-Up: font-size:increase
+URxvt.keysym.C-Down: font-size:decrease
+URxvt.keysym.C-equal: font-size:reset
+
 !Colors
 URxvt.foreground: #ffffff
 URxvt.background: #000000
