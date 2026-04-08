@@ -36,5 +36,5 @@ URxvt.color12:#5555ff
 !URxvt.color14:#d7d9fc
 !URxvt.color15:#e2e2e2
 
-# Pass through shift+enter so we can enter newlines in opencode.
+! Pass through shift+enter so we can enter newlines in opencode.
 URxvt.keysym.Shift-Return: \033[13;2u
