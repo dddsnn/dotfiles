@@ -31,8 +31,8 @@ for i in $(seq 0 $((num_outputs - 1))) ; do
     fi
 done
 
-if [[ ${status} = "on" ]] ; then
-    if [[ ${active_ouputs} = "" ]] ; then
+if [[ "${status}" = "on" ]] ; then
+    if [[ "${active_ouputs}" = "" ]] ; then
         # Lid is closed, no active outputs.
         echo mem > /sys/power/state
     fi
