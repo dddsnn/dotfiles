@@ -33,8 +33,8 @@ input "2362:628:PIXA3854:00_093A:0274_Touchpad" {
 }
 
 ### Lid switch handling
-bindswitch --locked lid:on exec sudo --preserve-env=SWAYSOCK /usr/local/bin/handle_lid_switch.bash on
-bindswitch --locked lid:off exec sudo --preserve-env=SWAYSOCK /usr/local/bin/handle_lid_switch.bash off
+bindswitch --locked lid:on exec sudo --preserve-env=SWAYSOCK ~/.local/bin/handle_lid_switch.bash on
+bindswitch --locked lid:off exec sudo --preserve-env=SWAYSOCK ~/.local/bin/handle_lid_switch.bash off
 
 ### Key bindings
 
@@ -42,8 +42,8 @@ bindswitch --locked lid:off exec sudo --preserve-env=SWAYSOCK /usr/local/bin/han
 # Mine:
 #
 # Adjust brightness
-bindsym $mod+F12 exec sudo /usr/local/bin/adjust_brightness.bash +5%
-bindsym $mod+F11 exec sudo /usr/local/bin/adjust_brightness.bash -5%
+bindsym $mod+F12 exec sudo ~/.local/bin/adjust_brightness.bash +5%
+bindsym $mod+F11 exec sudo ~/.local/bin/adjust_brightness.bash -5%
 
 #
 # Basics:
@@ -162,7 +162,7 @@ bar {
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while true ; do /usr/local/bin/status_bar.bash ; sleep 1; done
+    status_command while true ; do ~/.local/bin/status_bar.bash ; sleep 1; done
 
     colors {
         statusline #ffffff
