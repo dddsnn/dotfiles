@@ -1,9 +1,16 @@
 [user]
 	name = Marc Lehmann
 	email = marc@marclehmann.name
+	signingkey = ~/.ssh/id_ed25519
 [push]
 	default = simple
 [core]
 	editor = vim
 [color]
 	ui = auto
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/allowed_signers
