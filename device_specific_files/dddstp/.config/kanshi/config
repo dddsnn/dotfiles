@@ -1,0 +1,8 @@
+profile only_internal {
+	output eDP-1 enable mode 1920x1200@60.001 position 0,0
+}
+
+profile home {
+	output eDP-1 enable mode 1920x1200@60.001 position 0,960
+	output "Ancor Communications Inc PQ321\*" mode 3840x2160@30 position 1920,0
+}
