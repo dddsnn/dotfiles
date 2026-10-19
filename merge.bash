@@ -55,7 +55,7 @@ elif [[ "${response}" != "n" ]] ; then
     exit 1
 fi
 
-devices="$(ls ${DEVICE_SPECIFIC_FILES_DIR})"
+devices="$(printf "%s " $(ls ${DEVICE_SPECIFIC_FILES_DIR}) | sed 's/ $//')"
 if [[ "${devices}" == "" ]] ; then
     exit 0
 fi
