@@ -105,7 +105,13 @@ wait_for_app_id "${three_cx_app_id}"
 exec kaze &
 wait_for_app_id kaze
 
+notify "Workspace 1 set up."
+
 # Now start firefox and zed because we'll probably need them. They'll go to
 # their default workspaces.
 exec firefox &
 exec zed &
+wait_for_app_id firefox
+wait_for_app_id dev.zed.Zed
+
+notify "Startup complete."
