@@ -2,12 +2,7 @@
 
 # Helper script executing stuff that needs to be done once sway has started.
 
-# Show notification with icon.
-notify() {
-    message="${1}"
-    shift
-    notify-send --icon ~/fiete.png $@ "Sway background" "${message}"
-}
+source ~/.local/bin/sway_lib.bash
 
 # Get the unique sway container ID for a window's app_id.
 con_id_by_app_id() {
@@ -33,11 +28,7 @@ wait_for_app_id() {
     done
 }
 
-if grep -q closed /proc/acpi/button/lid/LID/state ; then
-    # If the lid is closed, disabled the internal display so kanshi can set the
-    # correct config. Sleep to wait for the state to settle after startup.
-    (sleep 4 ; swaymsg output eDP-1 disable) &
-fi
+disable_internal_display_if_lid_closed
 
 if [ -x /usr/bin/gnome-keyring-daemon ] ; then
     notify "$(printf "%s" \
@@ -65,14 +56,7 @@ while true ; do
     sleep 1
 done
 
-# Connect turbulens.
-if nmcli -f GENERAL.STATE connection show turbulens | grep -q activated ; then
-    notify "turbulens was already connected."
-elif nmcli connection up turbulens 2>&1 > /dev/null ; then
-    notify "Connected to turbulens."
-else
-    notify "Failed to connect to turbulens." --urgency critical
-fi
+connect_to_turbulens
 
 # Start setting up workspace 1: focus keepassxc and set to split into rows.
 sway "[con_id=${keepassxc}] focus ; splitv"

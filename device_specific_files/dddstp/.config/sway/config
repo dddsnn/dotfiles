@@ -197,5 +197,15 @@ exec kanshi &
 # Startup script that starts default applications, connects to VPN and some misc
 # stuff.
 exec ~/.local/bin/sway_startup.bash &
+# Use swayidle to check after we wake up from suspend: disable the internal
+# display if the lid is closed, and connect to the VPN if we've been
+# disconnected.
+exec swayidle \
+    after-resume "/bin/bash -c \
+        'source ~/.local/bin/sway_lib.bash ; \
+        disable_internal_display_if_lid_closed'" \
+    after-resume "/bin/bash -c \
+        'source ~/.local/bin/sway_lib.bash ; \
+        connect_to_turbulens'" &
 
 include /etc/sway/config.d/*
