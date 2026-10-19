@@ -2,12 +2,19 @@
 
 # Helper script executing stuff that needs to be done once sway has started.
 
+# Show notification with icon.
+notify() {
+    message="${1}"
+    shift
+    notify-send --icon ~/fiete.png $@ "Sway background" "${message}"
+}
+
 # Get the unique sway container ID for a window's app_id.
 con_id_by_app_id() {
     local app_id="${1}"
     local jq_cmd='.. | objects | select(.app_id? == $app_id) | .id'
     swaymsg -t get_tree -r | jq --arg app_id "${app_id}" "${jq_cmd}"
-} 
+}
 
 # Wait for an app with the given app_id to appear in the sway tree.
 wait_for_app_id() {
@@ -17,8 +24,9 @@ wait_for_app_id() {
 
 	while [ "$(con_id_by_app_id ${app_id})" = "" ] ; do
         if (( SECONDS - started >= timeout )); then
-            notify-send --urgency critical "App startup failed" \
-                "Waited ${timeout}s for ${app_id}, but it hasn't started up."
+            notify \
+                "Waited ${timeout}s for ${app_id}, but it hasn't started up." \
+                --urgency critical
             return 1
         fi
         sleep 0.1
@@ -32,10 +40,10 @@ if grep -q closed /proc/acpi/button/lid/LID/state ; then
 fi
 
 if [ -x /usr/bin/gnome-keyring-daemon ] ; then
-    notify-send --urgency critical "Bad configuration" "$(printf "%s" \
+    notify "$(printf "%s" \
         "/usr/bin/gnome-keyring-daemon is executable and will likely be " \
-        "started and prevent keepassxc's secret service from starting." \
-    )"
+        "started and prevent keepassxc's secret service from starting." )" \
+        --urgency critical
     exit 1
 fi
 
@@ -44,27 +52,26 @@ sway 'workspace number 1; exec keepassxc &'
 wait_for_app_id org.keepassxc.KeePassXC
 keepassxc=$(con_id_by_app_id org.keepassxc.KeePassXC)
 
-notify-send "Waiting for secret service to become available."
+notify "Waiting for secret service to become available..."
 while true ; do
     # Check the special marker entry in keepassxk that tells us the secret
     # service is available. This essentailly waits until keepassxc is unlocked.
     output=$(secret-tool lookup secret-service-running true 2>&1)
     if [ $? -eq 0 ] ; then
-        notify-send "Secret service is available." "${output}"
+        notify "Secret service is available."
         break
     fi
-    notify-send "Waiting for secret service..." \
-        "secret-tool output: ${output}"
+    notify "Waiting for secret service to become available...\n\n ${output}"
     sleep 1
 done
 
 # Connect turbulens.
 if nmcli -f GENERAL.STATE connection show turbulens | grep -q activated ; then
-    notify-send "VPN" "turbulens was already connected."
+    notify "turbulens was already connected."
 elif nmcli connection up turbulens 2>&1 > /dev/null ; then
-    notify-send "VPN" "Connected to turbulens."
+    notify "Connected to turbulens."
 else
-    notify-send --urgency critical "VPN" "Failed to connect to turbulens."
+    notify "Failed to connect to turbulens." --urgency critical
 fi
 
 # Start setting up workspace 1: focus keepassxc and set to split into rows.
