@@ -199,6 +199,8 @@ exec pipewire-pulse &
 exec wireplumber &
 # Explicitly start the xdg-desktop-portal for screensharing.
 exec /usr/libexec/xdg-desktop-portal-gnome &
+# The deja-dup backup monitor daemon.
+exec /usr/libexec/deja-dup/deja-dup-monitor &
 # kanshi takes care of screen layout profiles.
 exec kanshi &
 # Startup script that starts default applications, connects to VPN and some misc
