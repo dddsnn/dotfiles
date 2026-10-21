@@ -214,5 +214,8 @@ exec swayidle \
     after-resume "/bin/bash -c \
         'source ~/.local/bin/sway_lib.bash ; \
         connect_to_turbulens'" &
+# Start a background script that listens to output change events to disable the
+# internal display if the lid is closed.
+exec ~/.local/bin/sway_output_change.bash &
 
 include /etc/sway/config.d/*

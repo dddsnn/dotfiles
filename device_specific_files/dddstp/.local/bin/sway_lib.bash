@@ -10,10 +10,11 @@ notify() {
 }
 
 disable_internal_display_if_lid_closed() {
+    timeout=${1:-4}
     if grep -q closed /proc/acpi/button/lid/LID/state ; then
         # If the lid is closed, disabled the internal display so kanshi can set
         # the correct config. Sleep to wait for the state to settle.
-        (sleep 4 ; swaymsg output eDP-1 disable) &
+        (sleep "${timeout}" ; swaymsg output eDP-1 disable) &
     fi
 }
 
