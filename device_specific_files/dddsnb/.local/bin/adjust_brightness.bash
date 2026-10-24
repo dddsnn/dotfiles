@@ -26,6 +26,7 @@ new_percent=$((current_percent + add))
 new_brightness=$(((max_brightness * new_percent) / 100))
 new_brightness=$((new_brightness > 0 ? new_brightness : 0))
 new_brightness=$((new_brightness < max_brightness ? new_brightness : max_brightness))
-echo ${new_brightness} > ${BRIGHTNESS_FILE}
+# This requires sudo with no passwod for tee ${BRIGHTNESS_FILE}.
+echo ${new_brightness} | sudo tee ${BRIGHTNESS_FILE}
 
 exit 0
